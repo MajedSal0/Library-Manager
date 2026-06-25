@@ -18,18 +18,18 @@ class Library {
 public:
   void addBooks() {
     int size;
-    std::cout << "How many book you wanna store?:\n";
+    std::cout << "How many books do you want to store?\n";
     std::cin >> size;
-    std::cout << "Enter title , author , ISBN:\n";
+    std::cout << "Enter the title, author, and ISBN:\n";
     std::string title;
     std::string author;
     int ISBN;
     for (int i = 0; i < size; i++) {
-      std::cout << "Enter title:" << std::endl;
+      std::cout << "Enter the title:" << std::endl;
       std::getline(std::cin >> std::ws, title);
-      std::cout << "Enter an author: " << std::endl;
+      std::cout << "Enter the author:" << std::endl;
       std::getline(std::cin >> std::ws, author);
-      std::cout << "Enter ISBN" << std::endl;
+      std::cout << "Enter ISBN:" << std::endl;
       std::cin >> ISBN;
       Book a(title, author, ISBN, true);
       library.push_back(a);
@@ -39,10 +39,10 @@ public:
   // Displaying Books
   void displayBooks() {
     for (int i = 0; i < library.size(); i++) {
-      std::cout << "Title " << library[i].title << std::endl;
-      std::cout << "Author " << library[i].author << std::endl;
-      std::cout << "ISBN " << library[i].ISBN << std::endl;
-      std::cout << "Is Available? " << library[i].isAvailable << std::endl;
+      std::cout << "Title: " << library[i].title << std::endl;
+      std::cout << "Author: " << library[i].author << std::endl;
+      std::cout << "ISBN: " << library[i].ISBN << std::endl;
+      std::cout << "Available: " << library[i].isAvailable << std::endl;
     }
   }
   // Searching for a book
@@ -54,40 +54,40 @@ public:
     for (int i = 0; i < library.size(); i++) {
       if (library[i].title == book_to_search) {
         found = 1;
-        std::cout << "Title " << library[i].title << std::endl;
-        std::cout << "Author " << library[i].author << std::endl;
-        std::cout << "ISBN " << library[i].ISBN << std::endl;
-        std::cout << "Is Available? " << library[i].isAvailable << std::endl;
+        std::cout << "Title: " << library[i].title << std::endl;
+        std::cout << "Author: " << library[i].author << std::endl;
+        std::cout << "ISBN: " << library[i].ISBN << std::endl;
+        std::cout << "Available: " << library[i].isAvailable << std::endl;
       }
     }
     if (found) {
       std::cout << "Found!" << std::endl;
 
     } else {
-      std::cout << "Not found:" << std::endl;
+      std::cout << "Book not found." << std::endl;
     }
   }
 
-  // Borrwing
+  // Borrowing
   void borrowBook() {
     bool found = false;
-    std::cout << "Enter a book to to borrow :" << std::endl;
+    std::cout << "Enter a book to borrow:" << std::endl;
     std::string book_to_search;
     std::getline(std::cin >> std::ws, book_to_search);
     for (int i = 0; i < library.size(); i++) {
       if (library[i].title == book_to_search) {
         found = true;
         if (library[i].isAvailable == true) {
-          std::cout << "Borrow it" << std::endl;
+          std::cout << "Book borrowed successfully." << std::endl;
           library[i].isAvailable = false;
 
         } else {
-          std::cout << "Already borrowed!" << std::endl;
+          std::cout << "This book is already borrowed." << std::endl;
         }
       }
     }
     if (!found) {
-      std::cout << "Not found!" << std::endl;
+      std::cout << "Book not found." << std::endl;
     }
   }
   // Returning a book
@@ -100,16 +100,16 @@ public:
       if (library[i].title == book_to_return) {
         found = true;
         if (library[i].isAvailable == false) {
-          std::cout << "Book returned:" << std::endl;
+          std::cout << "Book returned successfully." << std::endl;
           library[i].isAvailable = true;
 
         } else {
-          std::cout << "Noting to be returnd:" << std::endl;
+          std::cout << "Nothing to return." << std::endl;
         }
       }
     }
     if (!found) {
-      std::cout << "Not found!" << std::endl;
+      std::cout << "Book not found." << std::endl;
     }
   }
   void removeBook() {
@@ -121,13 +121,13 @@ public:
       if (library[i].title == deleted_book) {
         auto it = library.begin() + i;
         library.erase(it);
-        std::cout << "Book removed!:";
+        std::cout << "Book removed successfully." << std::endl;
         found = true;
         break;
       }
     }
     if (!found) {
-      std::cout << "Not found:" << std::endl;
+      std::cout << "Book not found." << std::endl;
     }
   }
   void saveToFile() {
@@ -164,23 +164,23 @@ int main() {
   Library a;
   a.loadFromFile();
 
-  int choise = 0;
+  int choice = 0;
 
-  while (choise != 7) {
+  while (choice != 7) {
     std::cout << R"(
-        Enter a choise:
-        1. Add books
-        2. Display books
-        3. Search book
-        4. Borrow book
-        5. Return book
-        6. Remove book
-        7. Save &Exit)"
+        Enter a choice:
+        1. Add Books
+        2. Display Books
+        3. Search Book
+        4. Borrow Book
+        5. Return Book
+        6. Remove Book
+        7. Save & Exit)"
               << std::endl;
 
-    std::cin >> choise;
+    std::cin >> choice;
 
-    switch (choise) {
+    switch (choice) {
       case 1:
         a.addBooks();
         break;
@@ -199,10 +199,11 @@ int main() {
       case 6:
         a.removeBook();
         break;
-      case 7:a.saveToFile();
+      case 7:
+        a.saveToFile();
         break;
       default:
-        std::cout << "Invalid value" << std::endl;
+        std::cout << "Invalid choice." << std::endl;
     }
   }
   std::cout << "Thanks for using the program!" << std::endl;
