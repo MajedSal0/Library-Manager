@@ -158,6 +158,52 @@ public:
     }
     myFile.close();
   }
+
+  void updateBook() {
+    std::cout << "Enter the title of the book to update:" << std::endl;
+    bool found = false;
+    std::string newTitle;
+    std::string newAuthor;
+    std::string book_to_update;
+    int newISBN;
+    int choice;
+
+    std::getline(std::cin >> std::ws, book_to_update);
+    for (int i = 0; i < library.size(); i++) {
+      if (library[i].title == book_to_update) {
+        found = true;
+        std::cout << "What would you like to update?\n";
+        std::cout << "1. Title\n";
+        std::cout << "2. Author\n";
+        std::cout << "3. ISBN\n";
+        std::cin >> choice;
+
+        switch (choice) {
+          case 1:
+            std::cout << "Enter the new title: ";
+            std::getline(std::cin >> std::ws, newTitle);
+            library[i].title = newTitle;
+            break;
+          case 2:
+            std::cout << "Enter the new author: ";
+            std::getline(std::cin >> std::ws, newAuthor);
+            library[i].author = newAuthor;
+            break;
+          case 3:
+            std::cout << "Enter the new ISBN: ";
+            std::cin >> newISBN;
+
+            library[i].ISBN = newISBN;
+            break;
+        }
+        std::cout << "Updated successfully " << std::endl;
+        break;
+      }
+    }
+    if (!found) {
+      std::cout << "Not found!";
+    }
+  }
 };
 
 int main() {
@@ -166,7 +212,7 @@ int main() {
 
   int choice = 0;
 
-  while (choice != 7) {
+  while (choice != 8) {
     std::cout << R"(
         Enter a choice:
         1. Add Books
@@ -175,7 +221,8 @@ int main() {
         4. Borrow Book
         5. Return Book
         6. Remove Book
-        7. Save & Exit)"
+        7. Update Book
+        8. Save & Exit)"
               << std::endl;
 
     std::cin >> choice;
@@ -200,6 +247,9 @@ int main() {
         a.removeBook();
         break;
       case 7:
+        a.updateBook();
+        break;
+      case 8:
         a.saveToFile();
         break;
       default:
